@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 function QuickSilver_toDo() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
   type Task = {
-    id: number;
+    id: string;
     text: string;
     completed: boolean;
   };
@@ -16,7 +16,7 @@ function QuickSilver_toDo() {
   function addTask() {
     if (newTask.trim() !== "") {
       const task: Task = {
-        id: Date.now(),
+        id: crypto.randomUUID(),
         text: newTask.trim(),
         completed: false,
       };
@@ -25,7 +25,7 @@ function QuickSilver_toDo() {
     }
   }
 
-  function deleteTask(taskId: number) {
+  function deleteTask(taskId: string) {
     const updatedTasks = tasks.filter((element) => element.id !== taskId);
     setTasks(updatedTasks);
   }
@@ -40,8 +40,16 @@ function QuickSilver_toDo() {
       setTasks(updatedTasks);
     }
   }
+  function moveDown(index: number) {
+    const updatedTasks = [...tasks];
+    [updatedTasks[index], updatedTasks[index + 1]] = [
+      updatedTasks[index + 1],
+      updatedTasks[index],
+    ];
+    setTasks(updatedTasks);
+  }
 
-  function toggleTask(taskId: number) {
+  function toggleTask(taskId: string) {
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
         if (task.id === taskId) {
@@ -72,31 +80,46 @@ function QuickSilver_toDo() {
 
       <ul>
         {tasks.map((task, index) => (
-          <li key={task.id}>
-            <span
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-              className="text"
-            >
-              {task.text}
+          <li key={task.id} className="to-do-item">
+            <span className="item-title">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTask(task.id)}
+                className="checker"
+              ></input>
+              <span
+                style={{
+                  textDecoration: task.completed ? "line-through" : "none",
+                }}
+                className="text"
+              >
+                {task.text}
+              </span>
             </span>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTask(task.id)}
-              className="checker"
-            ></input>
 
-            <button
-              className="delete-button"
-              onClick={() => deleteTask(task.id)}
-            >
-              Delete
-            </button>
-            <button className="move-up" onClick={() => moveUp(index)}>
-              ☝️
-            </button>
+            <span className="item-actions">
+              <button
+                className="delete-button"
+                onClick={() => deleteTask(task.id)}
+              >
+                Delete
+              </button>
+              <button
+                className="move-up"
+                disabled={tasks.length === 1 || index === 0}
+                onClick={() => moveUp(index)}
+              >
+                ☝️
+              </button>
+              <button
+                className="move-down"
+                disabled={tasks.length === 1 || index === tasks.length - 1}
+                onClick={() => moveDown(index)}
+              >
+                👇
+              </button>
+            </span>
           </li>
         ))}
       </ul>

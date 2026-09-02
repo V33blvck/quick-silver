@@ -79,12 +79,8 @@ li{
   border-radius: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 15px;
-  justify-content: center;
   width: 600px
 }
-.Items{
-  flex-grow: 0;
-  flex-shrink: 1;
-  flex-basis: 10%
-}
+
