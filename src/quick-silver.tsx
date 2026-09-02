@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 
 function QuickSilver_toDo() {
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
+  type Task = {
+    id: number;
+    text: string;
+    completed: boolean;
+  };
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNewTask(event.target.value);
@@ -10,13 +15,44 @@ function QuickSilver_toDo() {
 
   function addTask() {
     if (newTask.trim() !== "") {
-      setTasks((t) => [...t, newTask]);
+      const task: Task = {
+        id: Date.now(),
+        text: newTask.trim(),
+        completed: false,
+      };
+      setTasks((t) => [...t, task]);
       setNewTask("");
     }
   }
-  function deleteTask(index: number) {
-    const updatedTasks = tasks.filter((element, i) => i !== index);
+
+  function deleteTask(taskId: number) {
+    const updatedTasks = tasks.filter((element) => element.id !== taskId);
     setTasks(updatedTasks);
+  }
+
+  function moveUp(index: number) {
+    if (index > 0) {
+      const updatedTasks = [...tasks];
+      [updatedTasks[index], updatedTasks[index - 1]] = [
+        updatedTasks[index - 1],
+        updatedTasks[index],
+      ];
+      setTasks(updatedTasks);
+    }
+  }
+
+  function toggleTask(taskId: number) {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id === taskId) {
+          return {
+            ...task,
+            completed: !task.completed,
+          };
+        }
+        return task;
+      }),
+    );
   }
 
   return (
@@ -34,16 +70,36 @@ function QuickSilver_toDo() {
         </button>
       </div>
 
-      <ol>
+      <ul>
         {tasks.map((task, index) => (
-          <li key={index}>
-            <span className="text">{task}</span>
-            <button className="delete-button" onClick={() => deleteTask(index)}>
+          <li key={task.id}>
+            <span
+              style={{
+                textDecoration: task.completed ? "line-through" : "none",
+              }}
+              className="text"
+            >
+              {task.text}
+            </span>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => toggleTask(task.id)}
+              className="checker"
+            ></input>
+
+            <button
+              className="delete-button"
+              onClick={() => deleteTask(task.id)}
+            >
               Delete
+            </button>
+            <button className="move-up" onClick={() => moveUp(index)}>
+              ☝️
             </button>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   );
 }
