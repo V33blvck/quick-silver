@@ -107,7 +107,10 @@ function QuickSilver_toDo() {
             </button>
             <button
               className="cancle-search"
-              onClick={() => setSearchMode(!searchMode)}
+              onClick={() => {
+                setSearchMode(!searchMode);
+                setSearchTask("");
+              }}
             >
               🚫
             </button>
@@ -125,7 +128,10 @@ function QuickSilver_toDo() {
             </button>
             <button
               className="toggleSearch"
-              onClick={() => setSearchMode(!searchMode)}
+              onClick={() => {
+                setSearchMode(!searchMode);
+                setNewTask("");
+              }}
             >
               🔎
             </button>
