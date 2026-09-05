@@ -1,8 +1,11 @@
-import React, { useId, useState } from "react";
+import React, { useState } from "react";
 
 function QuickSilver_toDo() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
+  const [searchTask, setSearchTask] = useState<string>("");
+  const [searchMode, setSearchMode] = useState(false);
+
   type Task = {
     id: string;
     text: string;
@@ -63,19 +66,71 @@ function QuickSilver_toDo() {
     );
   }
 
+  //setting the input to be equal to searchTask
+  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchTask(event.target.value);
+  }
+
+  //making filtered task float to the top
+  //if the filtered tasks index is not equal to 0 swap it with the item above it
+
+  function searchBtn() {
+    const filteredTask = tasks.filter((tasks) =>
+      tasks.text.toLowerCase().includes(searchTask.toLowerCase()),
+    );
+    if (filteredTask.length !== 0) {
+      const sortedTasks = [
+        ...filteredTask,
+        ...tasks.filter((task) => !filteredTask.includes(task)),
+      ];
+      setTasks(sortedTasks);
+    }
+    if (filteredTask.length === 0) {
+      alert("task not found");
+    }
+  }
+
   return (
     <div className="to-do-list">
       <h1>Quick-Silver To-Do</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter a task"
-          value={newTask}
-          onChange={handleInputChange}
-        />
-        <button className="add-button" onClick={addTask}>
-          Add
-        </button>
+      <div className="task-input">
+        {searchMode ? (
+          <>
+            <input
+              type="text"
+              placeholder="Search task"
+              value={searchTask}
+              onChange={handleSearch}
+            />
+            <button className="searchBtn" onClick={() => searchBtn()}>
+              search
+            </button>
+            <button
+              className="cancle-search"
+              onClick={() => setSearchMode(!searchMode)}
+            >
+              🚫
+            </button>
+          </>
+        ) : (
+          <>
+            <input
+              type="text"
+              placeholder="Enter a task"
+              value={newTask}
+              onChange={handleInputChange}
+            />
+            <button className="add-button" onClick={addTask}>
+              Add
+            </button>
+            <button
+              className="toggleSearch"
+              onClick={() => setSearchMode(!searchMode)}
+            >
+              🔎
+            </button>
+          </>
+        )}
       </div>
 
       <ul>
