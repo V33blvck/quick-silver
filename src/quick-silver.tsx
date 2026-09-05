@@ -71,8 +71,12 @@ function QuickSilver_toDo() {
     setSearchTask(event.target.value);
   }
 
-  //making filtered task float to the top
-  //if the filtered tasks index is not equal to 0 swap it with the item above it
+  /*
+    making filtered task float to the top
+    displaying two filtered arrays from tasks, filtered task: the search
+    and task.filter the task without the filtered item
+    displaying filteredTask then task.filter after in sortedTasks.
+  */
 
   function searchBtn() {
     const filteredTask = tasks.filter((tasks) =>
@@ -132,6 +136,7 @@ function QuickSilver_toDo() {
                 setSearchMode(!searchMode);
                 setNewTask("");
               }}
+              disabled={tasks.length === 1 || tasks.length === 0}
             >
               🔎
             </button>
