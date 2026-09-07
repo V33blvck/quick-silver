@@ -144,7 +144,7 @@ function QuickSilver_toDo() {
         )}
       </div>
 
-      <ul>
+      <ul className="item-container">
         {tasks.map((task, index) => (
           <li key={task.id} className="to-do-item">
             <span className="item-title">
@@ -169,7 +169,7 @@ function QuickSilver_toDo() {
                 className="delete-button"
                 onClick={() => deleteTask(task.id)}
               >
-                Delete
+                ❌
               </button>
               <button
                 className="move-up"
