@@ -38,16 +38,17 @@ input[type="text"]{
 }
 
 li{
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   /*font-weight: bold;*/
   padding: 15px;
   background-color: #38BDF8;
-  border: 3px solid hsla(0, 0%, 85%, 075);
+  border: 1px solid hsla(0, 0%, 85%, 075);
   margin-bottom: 10px;
   border-radius: 25px;
   align-items: center;
   justify-content: space-between;
-  height: 6px;
+  min-height: 20px;
+  height: auto;
   width: 95%;
   display: flex;
   align-self: center;
@@ -59,7 +60,7 @@ li{
   background-color: #1E293B;
   flex-direction: column;
   width: 600px;
-  max-width: 90%;
+  max-width: 98%;
   margin-top: 15px auto;
   padding-left: 8px;
   padding-right: 20px;
