@@ -84,7 +84,7 @@ li{
   background-color: rgb(104, 0, 0);
   border-radius: 8px;
   margin-left: 10px;
-  border-width: 2px;
+  border-width: 1.6px;
 }
 body {
   background-color: #FAF3DD;
@@ -105,4 +105,11 @@ body {
 .toggleSearch{
   border-radius: 10px;
   border: none;
+}
+.move-down{
+  margin-right: 3px
+}
+.item-actions{
+  display: flex;
+  flex-wrap: nowrap;
 }
