@@ -38,9 +38,9 @@ input[type="text"]{
 }
 
 li{
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   /*font-weight: bold;*/
-  padding: 4px;
+  padding: 3px;
   background-color: #38BDF8;
   border: 1px solid hsla(0, 0%, 85%, 075);
   margin-bottom: 10px;
