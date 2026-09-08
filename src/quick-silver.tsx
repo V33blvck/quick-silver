@@ -106,7 +106,7 @@ function QuickSilver_toDo() {
               value={searchTask}
               onChange={handleSearch}
             />
-            <button className="searchBtn" onClick={() => searchBtn()}>
+            <button className="search-Btn" onClick={() => searchBtn()}>
               search
             </button>
             <button

@@ -40,7 +40,7 @@ input[type="text"]{
 li{
   font-size: 1.4rem;
   /*font-weight: bold;*/
-  padding: 15px;
+  padding: 4px;
   background-color: #38BDF8;
   border: 1px solid hsla(0, 0%, 85%, 075);
   margin-bottom: 10px;
@@ -60,7 +60,7 @@ li{
   background-color: #1E293B;
   flex-direction: column;
   width: 600px;
-  max-width: 98%;
+  max-width: 95%;
   margin-top: 15px auto;
   padding-left: 8px;
   padding-right: 20px;
@@ -83,8 +83,26 @@ li{
 .delete-button{
   background-color: rgb(104, 0, 0);
   border-radius: 8px;
+  margin-left: 10px;
+  border-width: 2px;
 }
 body {
   background-color: #FAF3DD;
 }
+
+.search-Btn{
+  color: #FAF3DD;
+  background-color: rgba(39, 102, 142, 0.752);
+  border-radius: 15px;
+  border: none;
+}
   
+.cancle-search{
+  background-color: orange;
+  border-radius: 10px;
+  border: none;
+}
+.toggleSearch{
+  border-radius: 10px;
+  border: none;
+}
