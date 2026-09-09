@@ -45,13 +45,11 @@ li{
   border: 1px solid hsla(0, 0%, 85%, 075);
   margin-bottom: 10px;
   border-radius: 25px;
-  align-items: center;
   justify-content: space-between;
   min-height: 20px;
   height: auto;
   width: 95%;
   display: flex;
-  align-self: center;
 
 }
 
@@ -62,8 +60,8 @@ li{
   width: 600px;
   max-width: 95%;
   margin-top: 15px auto;
-  padding-left: 8px;
-  padding-right: 20px;
+  padding-left: 12px;
+  padding-right: 10px;
   padding-top: 8px;
   border-radius: 25px;
   align-items: flex-start;
@@ -107,9 +105,9 @@ body {
   border: none;
 }
 .move-down{
-  margin-right: 3px
+  margin-right: 4px
 }
 .item-actions{
   display: flex;
-  flex-wrap: nowrap;
+  /*flex-wrap: nowrap;*/
 }
