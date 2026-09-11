@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 
 function QuickSilver_toDo() {
+  //states for add and tasks
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
+  //states for search input
   const [searchTask, setSearchTask] = useState<string>("");
   const [searchMode, setSearchMode] = useState(false);
+  //states for search button
+  const [isSearching, setIsSearching] = useState(false);
+  const [filtering, setFiltering] = useState(false);
 
-  type Task = {
+  interface Task {
     id: string;
     text: string;
     completed: boolean;
-  };
+  }
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNewTask(event.target.value);
@@ -67,9 +72,9 @@ function QuickSilver_toDo() {
   }
 
   //setting the input to be equal to searchTask
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  /*function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchTask(event.target.value);
-  }
+  }*/
 
   /*
     making filtered task float to the top
@@ -77,10 +82,17 @@ function QuickSilver_toDo() {
     and task.filter the task without the filtered item
     displaying filteredTask then task.filter after in sortedTasks.
   */
+  //this is the global filter
+  const filterTask = tasks.filter((tasks) =>
+    tasks.text.toLowerCase().includes(searchTask),
+  );
+  ("");
 
-  function searchBtn() {
+  function doTheSearch(value?: string) {
+    let stringToUse = value || searchTask;
+    console.log(value);
     const filteredTask = tasks.filter((tasks) =>
-      tasks.text.toLowerCase().includes(searchTask.toLowerCase()),
+      tasks.text.toLowerCase().includes(stringToUse.toLowerCase()),
     );
     if (filteredTask.length !== 0) {
       const sortedTasks = [
@@ -89,9 +101,20 @@ function QuickSilver_toDo() {
       ];
       setTasks(sortedTasks);
     }
-    if (filteredTask.length === 0) {
+    setFiltering(true);
+    if (filtering && filteredTask.length === 0) {
       alert("task not found");
     }
+  }
+
+  //function searchBtn() {
+  //setFilteredTask
+  //}
+
+  function toggleSearch() {
+    setSearchMode(!searchMode);
+    setNewTask("");
+    setSearchTask("");
   }
 
   return (
@@ -104,18 +127,19 @@ function QuickSilver_toDo() {
               type="text"
               placeholder="Search task"
               value={searchTask}
-              onChange={handleSearch}
+              onChange={(event) => {
+                setSearchTask(event.target.value);
+                doTheSearch(event.target.value);
+              }}
             />
-            <button className="search-Btn" onClick={() => searchBtn()}>
+            <button
+              type="submit"
+              className="search-Btn"
+              onClick={() => setIsSearching(!isSearching)}
+            >
               search
             </button>
-            <button
-              className="cancle-search"
-              onClick={() => {
-                setSearchMode(!searchMode);
-                setSearchTask("");
-              }}
-            >
+            <button className="cancle-search" onClick={toggleSearch}>
               🚫
             </button>
           </>
@@ -132,10 +156,7 @@ function QuickSilver_toDo() {
             </button>
             <button
               className="toggleSearch"
-              onClick={() => {
-                setSearchMode(!searchMode);
-                setNewTask("");
-              }}
+              onClick={toggleSearch}
               disabled={tasks.length === 1 || tasks.length === 0}
             >
               🔎
@@ -145,7 +166,7 @@ function QuickSilver_toDo() {
       </div>
 
       <ul className="item-container">
-        {tasks.map((task, index) => (
+        {(isSearching ? filterTask : tasks).map((task, index) => (
           <li key={task.id} className="to-do-item">
             <span className="item-title">
               <input
