@@ -21,7 +21,8 @@ function QuickSilver_toDo() {
     setNewTask(event.target.value);
   }
 
-  function addTask() {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (newTask.trim() !== "") {
       const task: Task = {
         id: crypto.randomUUID(),
@@ -107,10 +108,6 @@ function QuickSilver_toDo() {
     }
   }
 
-  //function searchBtn() {
-  //setFilteredTask
-  //}
-
   function toggleSearch() {
     setSearchMode(!searchMode);
     setNewTask("");
@@ -120,7 +117,7 @@ function QuickSilver_toDo() {
   return (
     <div className="to-do-list">
       <h1>Quick-Silver To-Do</h1>
-      <div className="task-input">
+      <form onSubmit={handleSubmit} className="task-input">
         {searchMode ? (
           <>
             <input
@@ -148,10 +145,11 @@ function QuickSilver_toDo() {
             <input
               type="text"
               placeholder="Enter a task"
+              name="task"
               value={newTask}
               onChange={handleInputChange}
             />
-            <button className="add-button" onClick={addTask}>
+            <button className="add-button" type="submit">
               Add
             </button>
             <button
@@ -163,7 +161,7 @@ function QuickSilver_toDo() {
             </button>
           </>
         )}
-      </div>
+      </form>
 
       <ul className="item-container">
         {(isSearching ? filterTask : tasks).map((task, index) => (
