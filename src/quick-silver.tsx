@@ -8,13 +8,18 @@ function QuickSilver_toDo() {
   const [searchTask, setSearchTask] = useState<string>("");
   const [searchMode, setSearchMode] = useState(false);
   //states for search button
+  //const [isAdding, setIsAdding] = useState(false);
+  //state for search button
   const [isSearching, setIsSearching] = useState(false);
+  //state for live filtering
   const [filtering, setFiltering] = useState(false);
-
+  //state for checkbox
   interface Task {
     id: string;
     text: string;
     completed: boolean;
+    time: string;
+    startTime: string;
   }
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -23,16 +28,31 @@ function QuickSilver_toDo() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const timestamp: number = Date.now();
+    const date: Date = new Date(timestamp);
     if (newTask.trim() !== "") {
       const task: Task = {
         id: crypto.randomUUID(),
         text: newTask.trim(),
         completed: false,
+        time: "",
+        startTime: date.toLocaleString(),
       };
       setTasks((t) => [...t, task]);
       setNewTask("");
     }
   }
+  /*
+    setIsAdding(true);
+    if (
+      (isAdding && newTask.trim() === "") ||
+      (isSearching && searchTask.trim() === "")
+    ) {
+      console.log("no input detected");
+      alert("no input detected");
+      //setErrorMessage("no Input Detected");
+    }
+    setErrorMessage("");*/
 
   function deleteTask(taskId: string) {
     const updatedTasks = tasks.filter((element) => element.id !== taskId);
@@ -114,6 +134,24 @@ function QuickSilver_toDo() {
     setSearchTask("");
   }
 
+  function displayCompleteTime(task: Task, taskId: string) {
+    if (task.completed === false) {
+      const timestamp: number = Date.now();
+      const date: Date = new Date(timestamp);
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => {
+          if (task.id === taskId) {
+            return {
+              ...task,
+              time: date.toLocaleString(),
+            };
+          }
+          return task;
+        }),
+      );
+    }
+  }
+
   return (
     <div className="to-do-list">
       <h1>Quick-Silver To-Do</h1>
@@ -162,50 +200,63 @@ function QuickSilver_toDo() {
           </>
         )}
       </form>
-
       <ul className="item-container">
         {(isSearching ? filterTask : tasks).map((task, index) => (
-          <li key={task.id} className="to-do-item">
-            <span className="item-title">
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => toggleTask(task.id)}
-                className="checker"
-              ></input>
-              <span
-                style={{
-                  textDecoration: task.completed ? "line-through" : "none",
-                }}
-                className="text"
-              >
-                {task.text}
+          <div className="item-wrapper">
+            <li key={task.id} className="to-do-item">
+              <span className="item-title">
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => {
+                    toggleTask(task.id);
+                    displayCompleteTime(task, task.id);
+                  }}
+                  className="checker"
+                ></input>
+                <span
+                  style={{
+                    textDecoration: task.completed ? "line-through" : "none",
+                  }}
+                  className="text"
+                >
+                  {task.text}
+                </span>
               </span>
-            </span>
 
-            <span className="item-actions">
-              <button
-                className="delete-button"
-                onClick={() => deleteTask(task.id)}
-              >
-                ❌
-              </button>
-              <button
-                className="move-up"
-                disabled={tasks.length === 1 || index === 0}
-                onClick={() => moveUp(index)}
-              >
-                ☝️
-              </button>
-              <button
-                className="move-down"
-                disabled={tasks.length === 1 || index === tasks.length - 1}
-                onClick={() => moveDown(index)}
-              >
-                👇
-              </button>
+              <span className="item-actions">
+                <button
+                  className="delete-button"
+                  onClick={() => deleteTask(task.id)}
+                >
+                  ❌
+                </button>
+                <button
+                  className="move-up"
+                  disabled={tasks.length === 1 || index === 0}
+                  onClick={() => moveUp(index)}
+                >
+                  ☝️
+                </button>
+                <button
+                  className="move-down"
+                  disabled={tasks.length === 1 || index === tasks.length - 1}
+                  onClick={() => moveDown(index)}
+                >
+                  👇
+                </button>
+              </span>
+            </li>
+            <span className="task-times">
+              <>
+                {task.completed ? (
+                  <p>completed: {task.time}</p>
+                ) : (
+                  <p>started: {task.startTime}</p>
+                )}
+              </>
             </span>
-          </li>
+          </div>
         ))}
       </ul>
     </div>
