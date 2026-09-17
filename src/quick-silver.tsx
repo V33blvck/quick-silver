@@ -13,7 +13,8 @@ function QuickSilver_toDo() {
   const [isSearching, setIsSearching] = useState(false);
   //state for live filtering
   const [filtering, setFiltering] = useState(false);
-  //state for checkbox
+
+  //Task form object
   interface Task {
     id: string;
     text: string;
@@ -26,10 +27,13 @@ function QuickSilver_toDo() {
     setNewTask(event.target.value);
   }
 
+  //time fetching global variable used by task.startTime and displayCompleteTime
+  const timestamp: number = Date.now();
+  const date: Date = new Date(timestamp);
+
+  //form function for creating new tasks
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const timestamp: number = Date.now();
-    const date: Date = new Date(timestamp);
     if (newTask.trim() !== "") {
       const task: Task = {
         id: crypto.randomUUID(),
@@ -59,6 +63,7 @@ function QuickSilver_toDo() {
     setTasks(updatedTasks);
   }
 
+  //switching indexes with the task above
   function moveUp(index: number) {
     if (index > 0) {
       const updatedTasks = [...tasks];
@@ -69,6 +74,7 @@ function QuickSilver_toDo() {
       setTasks(updatedTasks);
     }
   }
+  //switching indexes with the task below
   function moveDown(index: number) {
     const updatedTasks = [...tasks];
     [updatedTasks[index], updatedTasks[index + 1]] = [
@@ -78,6 +84,7 @@ function QuickSilver_toDo() {
     setTasks(updatedTasks);
   }
 
+  //toggle for task.completed state
   function toggleTask(taskId: string) {
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
@@ -92,23 +99,17 @@ function QuickSilver_toDo() {
     );
   }
 
-  //setting the input to be equal to searchTask
-  /*function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchTask(event.target.value);
-  }*/
-
-  /*
-    making filtered task float to the top
-    displaying two filtered arrays from tasks, filtered task: the search
-    and task.filter the task without the filtered item
-    displaying filteredTask then task.filter after in sortedTasks.
-  */
   //this is the global filter
   const filterTask = tasks.filter((tasks) =>
     tasks.text.toLowerCase().includes(searchTask),
   );
-  ("");
 
+  /*
+  live filtering for search bar
+  separating the tasks into two arrays: 
+  one that contains tasks with entered characters and the top(filtered tasks)
+  and another that contains the ones without at the bottom(tasks !filteredTasks)
+  */
   function doTheSearch(value?: string) {
     let stringToUse = value || searchTask;
     console.log(value);
@@ -128,16 +129,16 @@ function QuickSilver_toDo() {
     }
   }
 
+  //changing between searching and adding tasks. resetting their inputs.
   function toggleSearch() {
     setSearchMode(!searchMode);
     setNewTask("");
     setSearchTask("");
   }
-
+  //Time that will be updated everytime you check the checkbox.
+  //setting task.time to be date.now .toLocaleString
   function displayCompleteTime(task: Task, taskId: string) {
     if (task.completed === false) {
-      const timestamp: number = Date.now();
-      const date: Date = new Date(timestamp);
       setTasks((prevTasks) =>
         prevTasks.map((task) => {
           if (task.id === taskId) {

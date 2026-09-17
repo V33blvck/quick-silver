@@ -36,20 +36,21 @@ input[type="text"]{
   color:black;
   height: 10px;
   display: flex;
+  width: 60%;
 }
 
 li{
   font-size: 1.3rem;
   /*font-weight: bold;*/
   padding: 3px;
-  padding-left: 5px;
+  padding-left: 7px;
   background-color: #38BDF8;
   border: 1px solid hsla(0, 0%, 85%, 075);
   border-radius: 25px;
   justify-content: space-between;
   min-height: 20px;
   height: auto;
-  width: 98%;
+  width: 97%;
   display: flex;
 }
 
@@ -70,7 +71,7 @@ li{
 }
 .task-input{
   height: 45px;
-  width: 350px;
+  max-width: 350px;
   background-color: rgb(3, 183, 111);
   border-radius: 40px;
   display:flex;
@@ -123,14 +124,14 @@ body {
   min-height: 60px;
   align-items: center;
   width: 95%;
+  margin-bottom: 3px;
 }
 
 .task-times{
-  flex-basis: 100%;
   text-align: right;
   color: #FAF3DD;
   margin: -15px;
-  padding-right: 15px;
+  padding-right: 22px;
   font-size: 13px;
 
 }
