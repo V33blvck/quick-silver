@@ -12,20 +12,25 @@ h1 {
   margin: 32px 0;
   @media (max-width: 1024px) {
     font-size: 36px;
-    margin: 20px 0;
+    margin-bottom: 30px;
+    margin-left: 6px;
+
   }
 }
 
 .add-button{
   font-size: .9rem;
   height: 25px;
-  width: 55px;
+  max-width: 75px;
+  width: 15%;
   color: white;
   border: none;
   border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.5 ease;
   background-color: hsl(165, 96%, 21%);
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 input[type="text"]{
@@ -60,7 +65,7 @@ li{
   flex-direction: column;
   width: 600px;
   max-width: 95%;
-  margin-top: 15px auto;
+  margin-top: 0px;
   padding-left: 12px;
   padding-right: 10px;
   padding-top: 8px;
@@ -69,14 +74,19 @@ li{
   min-height: 20px;
   justify-content: flex-start;
 }
-.task-input{
-  height: 45px;
-  max-width: 350px;
+.input-wrappers{
+  height: 43px;
+  max-width: 370px;
   background-color: rgb(3, 183, 111);
   border-radius: 40px;
   display:flex;
   align-items: center;
   padding-left: 6px;
+  padding-right: 8px;
+  margin-bottom: 5px;
+  flex-wrap: nowrap;
+  margin-top: 10px;
+
 }
 
 .delete-button{
@@ -94,6 +104,9 @@ body {
   background-color: rgba(39, 102, 142, 0.752);
   border-radius: 15px;
   border: none;
+  margin-left: 2px;
+  margin-right: 2px;
+  width: 16%;
 }
   
 .cancle-search{
@@ -134,4 +147,22 @@ body {
   padding-right: 22px;
   font-size: 13px;
 
+}
+.task-input{
+  min-height: 70px;
+  max-width: 370px;
+  background-color: none;
+  display:flex;
+  align-items: center;
+  padding-left: 6px;
+  margin-bottom: none;
+  flex-wrap: wrap;
+  padding-bottom: 3px;
+
+}
+.error-message{
+  margin-top: 0px;
+  margin-left: 15px;
+  color: rgb(143, 6, 6);
+ 
 }

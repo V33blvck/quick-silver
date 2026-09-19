@@ -8,10 +8,11 @@ function QuickSilver_toDo() {
   const [searchTask, setSearchTask] = useState<string>("");
   const [searchMode, setSearchMode] = useState(false);
   //states for search button
-  //const [isAdding, setIsAdding] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   //state for search button
   const [isSearching, setIsSearching] = useState(false);
-  //state for live filtering
+
+  const [errorMessage, setErrorMessage] = useState("");
   const [filtering, setFiltering] = useState(false);
 
   //Task form object
@@ -23,10 +24,6 @@ function QuickSilver_toDo() {
     startTime: string;
   }
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setNewTask(event.target.value);
-  }
-
   //time fetching global variable used by task.startTime and displayCompleteTime
   const timestamp: number = Date.now();
   const date: Date = new Date(timestamp);
@@ -34,6 +31,19 @@ function QuickSilver_toDo() {
   //form function for creating new tasks
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setIsAdding(!isAdding);
+    if (searchMode === true) {
+      setIsAdding(false);
+    }
+    if (newTask.trim() === "" && searchMode === false && isAdding === true) {
+      setErrorMessage("no input detected");
+      console.log(errorMessage);
+      return;
+    }
+    if (newTask.trim() !== "") {
+      setErrorMessage("");
+      console.log(errorMessage);
+    }
     if (newTask.trim() !== "") {
       const task: Task = {
         id: crypto.randomUUID(),
@@ -46,17 +56,6 @@ function QuickSilver_toDo() {
       setNewTask("");
     }
   }
-  /*
-    setIsAdding(true);
-    if (
-      (isAdding && newTask.trim() === "") ||
-      (isSearching && searchTask.trim() === "")
-    ) {
-      console.log("no input detected");
-      alert("no input detected");
-      //setErrorMessage("no Input Detected");
-    }
-    setErrorMessage("");*/
 
   function deleteTask(taskId: string) {
     const updatedTasks = tasks.filter((element) => element.id !== taskId);
@@ -124,16 +123,40 @@ function QuickSilver_toDo() {
       setTasks(sortedTasks);
     }
     setFiltering(true);
-    if (filtering && filteredTask.length === 0) {
-      alert("task not found");
+    if (filtering && searchTask !== "") {
+      setErrorMessage("");
     }
   }
 
-  //changing between searching and adding tasks. resetting their inputs.
+  function searchBtn() {
+    setIsSearching(!isSearching);
+    if (searchTask.trim() === "") {
+      setErrorMessage("no input detected");
+      console.log(errorMessage);
+    }
+    if (searchTask !== "" && filterTask.length === 0) {
+      setErrorMessage("task not found");
+      console.log(errorMessage);
+    }
+    if (searchTask !== "" && filterTask.length !== 0) {
+      setErrorMessage("");
+      console.log(errorMessage);
+    }
+  }
+  function resetError(value: string) {
+    const userInput = value || searchTask.trim() || newTask.trim();
+    if (userInput !== "") {
+      setErrorMessage("");
+    }
+  }
+
+  //changing between searching and adding tasks. resetting the in
+  // puts.
   function toggleSearch() {
     setSearchMode(!searchMode);
     setNewTask("");
     setSearchTask("");
+    setErrorMessage("");
   }
   //Time that will be updated everytime you check the checkbox.
   //setting task.time to be date.now .toLocaleString
@@ -159,45 +182,55 @@ function QuickSilver_toDo() {
       <form onSubmit={handleSubmit} className="task-input">
         {searchMode ? (
           <>
-            <input
-              type="text"
-              placeholder="Search task"
-              value={searchTask}
-              onChange={(event) => {
-                setSearchTask(event.target.value);
-                doTheSearch(event.target.value);
-              }}
-            />
-            <button
-              type="submit"
-              className="search-Btn"
-              onClick={() => setIsSearching(!isSearching)}
-            >
-              search
-            </button>
-            <button className="cancle-search" onClick={toggleSearch}>
-              🚫
-            </button>
+            <div className="input-wrappers">
+              <input
+                type="text"
+                placeholder="Search task"
+                value={searchTask}
+                onChange={(event) => {
+                  setSearchTask(event.target.value);
+                  doTheSearch(event.target.value);
+                  resetError(event.target.value);
+                }}
+              />
+              <button type="submit" className="search-Btn" onClick={searchBtn}>
+                search
+              </button>
+              <button className="cancle-search" onClick={toggleSearch}>
+                🚫
+              </button>
+            </div>
+            <>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+            </>
           </>
         ) : (
           <>
-            <input
-              type="text"
-              placeholder="Enter a task"
-              name="task"
-              value={newTask}
-              onChange={handleInputChange}
-            />
-            <button className="add-button" type="submit">
-              Add
-            </button>
-            <button
-              className="toggleSearch"
-              onClick={toggleSearch}
-              disabled={tasks.length === 1 || tasks.length === 0}
-            >
-              🔎
-            </button>
+            <div className="input-wrappers">
+              <input
+                type="text"
+                placeholder="Enter a task"
+                name="task"
+                value={newTask}
+                onChange={(event) => {
+                  setNewTask(event.target.value);
+                  resetError(event.target.value);
+                }}
+              />
+              <button className="add-button" type="submit">
+                Add
+              </button>
+              <button
+                className="toggleSearch"
+                onClick={toggleSearch}
+                disabled={tasks.length === 1 || tasks.length === 0}
+              >
+                🔎
+              </button>
+            </div>
+            <>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+            </>
           </>
         )}
       </form>
