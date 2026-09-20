@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getItem, setItem } from "./utils/localStorage";
 
 function QuickSilver_toDo() {
   //states for add and tasks
-  const [tasks, setTasks] = useState<Task[]>([]);
+  //const [tasks, setTasks] = useState<Task[]>([]);
+  //persisting tasks with local storage
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const item = getItem("tasks");
+    return (item as Task[]) || [];
+  });
+
+  useEffect(() => {
+    setItem("tasks", tasks);
+  }, [tasks]);
+
   const [newTask, setNewTask] = useState<string>("");
   //states for search input
   const [searchTask, setSearchTask] = useState<string>("");
@@ -143,10 +154,12 @@ function QuickSilver_toDo() {
       console.log(errorMessage);
     }
   }
-  function resetError(value: string) {
+
+  function resetError(value?: string) {
     const userInput = value || searchTask.trim() || newTask.trim();
     if (userInput !== "") {
       setErrorMessage("");
+      setIsSearching(false);
     }
   }
 
