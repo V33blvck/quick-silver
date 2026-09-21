@@ -137,13 +137,13 @@ li{
   border-radius: 10px;
   margin-right: 4px;
   margin-left: 2px;
-  border-width: 1.6px;
+  border-width: none;
   height: 18px;
   width: 18px;
   font-size: 9px;
   display: flex;
   justify-content: center;
-  
+  align-items: center;
 }
 
 .move-down{
