@@ -137,10 +137,10 @@ li{
   border-radius: 10px;
   margin-right: 4px;
   margin-left: 2px;
-  border-width: none;
-  height: 18px;
-  width: 18px;
-  font-size: 9px;
+  border-width: 0px;
+  height: 16px;
+  width: 16px;
+  font-size: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
