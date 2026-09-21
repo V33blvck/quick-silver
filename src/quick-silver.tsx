@@ -273,24 +273,24 @@ function QuickSilver_toDo() {
 
               <span className="item-actions">
                 <button
-                  className="delete-button"
-                  onClick={() => deleteTask(task.id)}
-                >
-                  ❌
-                </button>
-                <button
                   className="move-up"
                   disabled={tasks.length === 1 || index === 0}
                   onClick={() => moveUp(index)}
                 >
-                  ☝️
+                  <span className="move-up-emoji">☝️</span>
                 </button>
                 <button
                   className="move-down"
                   disabled={tasks.length === 1 || index === tasks.length - 1}
                   onClick={() => moveDown(index)}
                 >
-                  👇
+                  <span className="move-down-emoji">👇</span>
+                </button>
+                <button
+                  className="delete-button"
+                  onClick={() => deleteTask(task.id)}
+                >
+                  ❌
                 </button>
               </span>
             </li>
