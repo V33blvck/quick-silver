@@ -19,7 +19,6 @@ function QuickSilver_toDo() {
   const [searchTask, setSearchTask] = useState<string>("");
   const [searchMode, setSearchMode] = useState(false);
   //states for search button
-  const [isAdding, setIsAdding] = useState(false);
   //state for search button
   const [isSearching, setIsSearching] = useState(false);
 
@@ -42,11 +41,7 @@ function QuickSilver_toDo() {
   //form function for creating new tasks
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsAdding(!isAdding);
-    if (searchMode === true) {
-      setIsAdding(false);
-    }
-    if (newTask.trim() === "" && searchMode === false && isAdding === true) {
+    if (newTask.trim() === "" && searchMode === false) {
       setErrorMessage("no input detected");
       console.log(errorMessage);
       return;
@@ -206,7 +201,7 @@ function QuickSilver_toDo() {
                   resetError(event.target.value);
                 }}
               />
-              <button type="submit" className="search-Btn" onClick={searchBtn}>
+              <button type="button" className="search-Btn" onClick={searchBtn}>
                 search
               </button>
               <button className="cancle-search" onClick={toggleSearch}>
