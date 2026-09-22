@@ -245,58 +245,58 @@ function QuickSilver_toDo() {
       <ul className="item-container">
         {(isSearching ? filterTask : tasks).map((task, index) => (
           <div className="item-wrapper">
-            <li key={task.id} className="to-do-item">
-              <span className="item-title">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => {
-                    toggleTask(task.id);
-                    displayCompleteTime(task, task.id);
-                  }}
-                  className="checker"
-                ></input>
-                <span
-                  style={{
-                    textDecoration: task.completed ? "line-through" : "none",
-                  }}
-                  className="text"
-                >
-                  {task.text}
+            <span className="li-wrapper">
+              <li key={task.id} className="to-do-item">
+                <span className="item-title">
+                  <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => {
+                      toggleTask(task.id);
+                      displayCompleteTime(task, task.id);
+                    }}
+                    className="checker"
+                  ></input>
+                  <span
+                    style={{
+                      textDecoration: task.completed ? "line-through" : "none",
+                    }}
+                    className="text"
+                  >
+                    {task.text}
+                  </span>
                 </span>
-              </span>
 
-              <span className="item-actions">
-                <button
-                  className="move-up"
-                  disabled={tasks.length === 1 || index === 0}
-                  onClick={() => moveUp(index)}
-                >
-                  <span className="move-up-emoji">☝️</span>
-                </button>
-                <button
-                  className="move-down"
-                  disabled={tasks.length === 1 || index === tasks.length - 1}
-                  onClick={() => moveDown(index)}
-                >
-                  <span className="move-down-emoji">👇</span>
-                </button>
-                <button
-                  className="delete-button"
-                  onClick={() => deleteTask(task.id)}
-                >
-                  ❌
-                </button>
-              </span>
-            </li>
+                <span className="item-actions">
+                  <button
+                    className="move-up"
+                    disabled={tasks.length === 1 || index === 0}
+                    onClick={() => moveUp(index)}
+                  >
+                    <span className="move-up-emoji">☝️</span>
+                  </button>
+                  <button
+                    className="move-down"
+                    disabled={tasks.length === 1 || index === tasks.length - 1}
+                    onClick={() => moveDown(index)}
+                  >
+                    <span className="move-down-emoji">👇</span>
+                  </button>
+                </span>
+              </li>
+              <button
+                className="delete-button"
+                onClick={() => deleteTask(task.id)}
+              >
+                ❌
+              </button>
+            </span>
             <span className="task-times">
-              <>
-                {task.completed ? (
-                  <p>completed: {task.time}</p>
-                ) : (
-                  <p>started: {task.startTime}</p>
-                )}
-              </>
+              {task.completed ? (
+                <p>completed: {task.time}</p>
+              ) : (
+                <p>started: {task.startTime}</p>
+              )}
             </span>
           </div>
         ))}
