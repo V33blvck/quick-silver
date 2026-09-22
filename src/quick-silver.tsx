@@ -201,7 +201,7 @@ function QuickSilver_toDo() {
                   resetError(event.target.value);
                 }}
               />
-              <button type="button" className="search-Btn" onClick={searchBtn}>
+              <button type="submit" className="search-Btn" onClick={searchBtn}>
                 search
               </button>
               <button className="cancle-search" onClick={toggleSearch}>
