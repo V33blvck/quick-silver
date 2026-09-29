@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { getItem, setItem } from "./utils/localStorage";
+import { setItem } from "./utils/localStorage";
+import { date } from "./utils/time";
+import { useLocation } from "react-router-dom";
+import type { Task } from "./utils/types";
 
-function QuickSilver_toDo() {
+interface todoProps {
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+}
+
+function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   //states for add and tasks
-  //const [tasks, setTasks] = useState<Task[]>([]);
   //persisting tasks with local storage
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const item = getItem("tasks");
-    return (item as Task[]) || [];
-  });
 
   useEffect(() => {
     setItem("tasks", tasks);
   }, [tasks]);
+
+  const location = useLocation();
+  const groupName = location.state?.groupName;
 
   const [newTask, setNewTask] = useState<string>("");
   //states for search input
@@ -27,17 +33,7 @@ function QuickSilver_toDo() {
   const [filtering, setFiltering] = useState(false);
 
   //Task form object
-  interface Task {
-    id: string;
-    text: string;
-    completed: boolean;
-    time: string;
-    startTime: string;
-  }
-
   //time fetching global variable used by task.startTime and displayCompleteTime
-  const timestamp: number = Date.now();
-  const date: Date = new Date(timestamp);
 
   //form function for creating new tasks
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -58,6 +54,7 @@ function QuickSilver_toDo() {
         completed: false,
         time: "",
         startTime: date.toLocaleString(),
+        taskGroup: groupName,
       };
       setTasks((t) => [...t, task]);
       setNewTask("");
@@ -106,8 +103,10 @@ function QuickSilver_toDo() {
   }
 
   //this is the global filter
-  const filterTask = tasks.filter((tasks) =>
-    tasks.text.toLowerCase().includes(searchTask),
+  const filterTask = tasks.filter(
+    (tasks) =>
+      tasks.text.toLowerCase().includes(searchTask) &&
+      tasks.taskGroup === groupName,
   );
 
   /*
@@ -186,9 +185,14 @@ function QuickSilver_toDo() {
     }
   }
 
+  const groupTasks = tasks.filter((task) => {
+    console.log(task.taskGroup, groupName);
+    return task.taskGroup === groupName;
+  });
+
   return (
     <div className="to-do-list">
-      <h1>Quick-Silver To-Do</h1>
+      <h1>{groupName.toUpperCase()}</h1>
       <form onSubmit={handleSubmit} className="task-input">
         {searchMode ? (
           <>
@@ -250,7 +254,7 @@ function QuickSilver_toDo() {
         )}
       </form>
       <ul className="item-container">
-        {(isSearching ? filterTask : tasks).map((task, index) => (
+        {(isSearching ? filterTask : groupTasks).map((task, index) => (
           <div className="item-wrapper">
             <span className="li-wrapper">
               <li key={task.id} className="to-do-item">

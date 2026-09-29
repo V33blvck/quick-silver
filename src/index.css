@@ -117,7 +117,7 @@ input[type="text"]{
   justify-content: flex-start;
 }
 
-li{
+.to-do-item{
   font-size: 1.3rem;
   /*font-weight: bold;*/
   padding: 3px;
@@ -220,4 +220,46 @@ li{
 .item-actions{
   display: flex;
   flex-wrap: nowrap;
+}
+
+.group-item{
+  min-height: 120px;
+  max-height: 150px;
+  width: 100%;
+  margin-bottom: 5px;
+  background: linear-gradient( to bottom, lightgreen 65%, transparent 100%);
+  border-radius: 13px;
+  border-bottom-width: 0px;
+  border-width: 1px 1px 0px 1px;
+}
+.group-wrapper{
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+.group-input{
+  display: flex;
+  flex-direction:row;
+  margin-bottom: 30px;
+  align-items: center;
+}
+.enter-group{
+  max-width: 250px;
+  font-size: 1rem;
+  padding: 10px;
+  border: 2px solid hsla(0, 0%, 80%, 0.5);
+  border-radius: 20px;
+  color:black;
+  height: 10px;
+  display: flex;
+}
+.individual-group-wrapper{
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+  flex-grow: auto;
+  flex-wrap: nowrap;
+}
+.home-header{
+  margin-bottom: 9px;
 }
