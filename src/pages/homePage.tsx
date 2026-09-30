@@ -16,7 +16,8 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
     text: string;
     id: string;
   }
-  function handleAdd() {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (groupText.trim() !== "") {
       const group: Group = {
         text: groupText,
@@ -47,7 +48,7 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
   return (
     <div className="Group-display">
       <h1 className="home-header">Quick-Silver To-Do</h1>
-      <span className="group-input">
+      <form onSubmit={handleSubmit} className="group-input">
         <input
           onChange={handleGroup}
           placeholder="Enter Group Name"
@@ -55,10 +56,10 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
           type="text"
           className="enter-group"
         />
-        <button onClick={handleAdd} type="button" className="add-button">
+        <button type="submit" className="add-button">
           Add
         </button>
-      </span>
+      </form>
 
       {groupTasks.map((group) => (
         <span className="group-wrapper">
