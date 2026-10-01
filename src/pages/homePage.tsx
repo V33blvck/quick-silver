@@ -67,11 +67,7 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
       dialogRef.current?.close();
     }
   }
-  function resetError() {
-    if (groupText.trim() !== "") {
-      setErrorMessage("");
-    }
-  }
+
   return (
     <div className="Group-display">
       <header>
@@ -94,10 +90,7 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
         <span className="popup">
           <form onSubmit={handleSubmit} className="group-input" method="dialog">
             <input
-              onChange={() => {
-                handleGroup;
-                resetError;
-              }}
+              onChange={handleGroup}
               placeholder="Enter Group Name"
               value={groupText}
               type="text"
