@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usPersistedState } from "../hooks/usePersistedState";
 import type { Task } from "../utils/types";
@@ -7,15 +7,19 @@ interface groupProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
+interface Group {
+  text: string;
+  id: string;
+}
 
 export default function HomePage({ tasks, setTasks }: groupProps) {
   const [groupTasks, setGroupTasks] = usPersistedState<Group[]>("group", []); //<Group[]>([]);
   const [groupText, setGroupText] = useState("");
   const navigate = useNavigate();
-  interface Group {
-    text: string;
-    id: string;
-  }
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [displayGrid, setDisplayGrid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (groupText.trim() !== "") {
@@ -25,6 +29,10 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
       };
       setGroupTasks((g) => [...g, group]);
       setGroupText("");
+      closeDialog();
+    }
+    if (groupText.trim() === "") {
+      setErrorMessage("No Input Detected");
     }
   }
 
@@ -45,29 +53,93 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
     );
     setTasks(updatedTasks);
   }
+
+  function openDialog() {
+    dialogRef.current?.showModal();
+    setErrorMessage("");
+  }
+  function closeDialog() {
+    dialogRef.current?.close();
+    setErrorMessage("");
+  }
+  function handleClickDialog(event: React.MouseEvent<HTMLDialogElement>) {
+    if (event.target === event.currentTarget) {
+      dialogRef.current?.close();
+    }
+  }
+  function resetError() {
+    if (groupText.trim() !== "") {
+      setErrorMessage("");
+    }
+  }
   return (
     <div className="Group-display">
-      <h1 className="home-header">Quick-Silver To-Do</h1>
-      <form onSubmit={handleSubmit} className="group-input">
-        <input
-          onChange={handleGroup}
-          placeholder="Enter Group Name"
-          value={groupText}
-          type="text"
-          className="enter-group"
-        />
-        <button type="submit" className="add-button">
-          Add
+      <header>
+        <h1 className="home-header">Quick-Silver To-Do</h1>
+        <button
+          onClick={() => {
+            setDisplayGrid(!displayGrid);
+          }}
+          className="display-btn"
+        >
+          {displayGrid ? (
+            <span className="display-emoji">🟰</span>
+          ) : (
+            <span className="display-emoji">🪟</span>
+          )}
         </button>
-      </form>
+      </header>
 
-      {groupTasks.map((group) => (
-        <span className="group-wrapper">
-          <span className="individual-group-wrapper">
-            {" "}
+      <dialog ref={dialogRef} onClick={handleClickDialog}>
+        <span className="popup">
+          <form onSubmit={handleSubmit} className="group-input" method="dialog">
+            <input
+              onChange={() => {
+                handleGroup;
+                resetError;
+              }}
+              placeholder="Enter Group Name"
+              value={groupText}
+              type="text"
+              className="enter-group"
+            />
+            <button type="submit" className="add-button">
+              Add
+            </button>
+            <button onClick={closeDialog} className="cancle-btn">
+              🚫
+            </button>
+            <>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+            </>
+          </form>
+        </span>
+      </dialog>
+
+      <span className={displayGrid ? "group-wrapper" : "row-wrapper"}>
+        <span
+          className={
+            displayGrid ? "individual-group-wrapper" : "individual-row-wrapper"
+          }
+        >
+          <button
+            onClick={openDialog}
+            className={displayGrid ? "create-group-grid" : "create-group-row"}
+          >
+            + Create Task Group
+          </button>
+        </span>
+        {groupTasks.map((group) => (
+          <span
+            className={
+              displayGrid
+                ? "individual-group-wrapper"
+                : "individual-row-wrapper"
+            }
+          >
             <button
               key={group.id}
-              className="group-item"
+              className={displayGrid ? "group-item-grid" : "group-item-row"}
               onClick={() => {
                 openGroup(group.text);
               }}
@@ -81,8 +153,8 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
               ❌
             </button>
           </span>
-        </span>
-      ))}
+        ))}
+      </span>
     </div>
   );
 }

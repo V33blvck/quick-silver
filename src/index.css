@@ -63,7 +63,7 @@ h1 {
   border: none;
 }
 
-.cancle-search{
+.cancle-btn{
   background-color: orange;
   border-radius: 10px;
   border: none;
@@ -222,26 +222,45 @@ input[type="text"]{
   flex-wrap: nowrap;
 }
 
-.group-item{
-  min-height: 120px;
-  max-height: 150px;
-  width: 100%;
+.group-item-row{
+  min-height: 100%;
+  width: 93%;
   margin-bottom: 5px;
   background: linear-gradient( to bottom, lightgreen 65%, transparent 100%);
   border-radius: 13px;
   border-bottom-width: 0px;
   border-width: 1px 1px 0px 1px;
+  display: flex;
+  justify-content: left;
+  padding-left: 13px;
+}
+.group-item-grid{
+  min-height: 100%;
+  width: 93%;
+  margin-bottom: 5px;
+  background: linear-gradient( to bottom, lightgreen 65%, transparent 100%);
+  border-radius: 13px;
+  border-bottom-width: 0px;
+  border-width: 1px 1px 0px 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .group-wrapper{
   display: flex;
-  flex-direction: column;
-  max-width: 400px;
+  flex-direction: row;
+  max-width: 500px;
+  min-height: 130px;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 .group-input{
   display: flex;
   flex-direction:row;
   margin-bottom: 30px;
   align-items: center;
+  flex-wrap: wrap;
+  max-width: 300px;
 }
 .enter-group{
   max-width: 250px;
@@ -254,12 +273,61 @@ input[type="text"]{
   display: flex;
 }
 .individual-group-wrapper{
+  min-height: 120px;
+  max-height: 150px;
   display: flex;
   flex-direction: row;
-  max-width: 100%;
-  flex-grow: auto;
-  flex-wrap: nowrap;
+  width: 50%;
+  margin-bottom: 6px;
+}
+.create-group-grid{
+  min-height: 100%;
+  width: 90%;
+  margin-bottom: 5px;
+  background: linear-gradient( to bottom, lightgreen 65%, transparent 100%);
+  border-radius: 13px;
+  border-bottom-width: 0px;
+  border-width: 1px 1px 0px 1px;
+}
+.individual-row-wrapper{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 6px;
+  min-height: 40px;
+}
+.row-wrapper{
+  display: flex;
+  flex-direction: column;
 }
 .home-header{
   margin-bottom: 9px;
+}
+header{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px
+}
+.create-group-row{
+  min-height: 100%;
+  width: 170px;
+  margin-bottom: 5px;
+  background: linear-gradient( to bottom, lightgreen 65%, transparent 100%);
+  border-radius: 13px;
+  border-bottom-width: 0px;
+  border-width: 1px 1px 0px 1px;
+}
+.popup{
+  display: flex;
+  align-items: center;
+  min-height: 115px;
+  min-width: 100%;
+  margin: -15px
+}
+.display-btn{
+  font-size: 23px;
+  margin-right: 6px;
+  border-width: 1px;
+  border-radius: 10px;
 }

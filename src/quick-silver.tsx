@@ -40,12 +40,10 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
     event.preventDefault();
     if (newTask.trim() === "" && searchMode === false && isToggling === false) {
       setErrorMessage("no input detected");
-      console.log(errorMessage);
       return;
     }
     if (newTask.trim() !== "") {
       setErrorMessage("");
-      console.log(errorMessage);
     }
     if (newTask.trim() !== "") {
       const task: Task = {
@@ -117,7 +115,6 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   */
   function doTheSearch(value?: string) {
     let stringToUse = value || searchTask;
-    console.log(value);
     const filteredTask = tasks.filter((tasks) =>
       tasks.text.toLowerCase().includes(stringToUse.toLowerCase()),
     );
@@ -138,15 +135,12 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
     setIsSearching(!isSearching);
     if (searchTask.trim() === "") {
       setErrorMessage("no input detected");
-      console.log(errorMessage);
     }
     if (searchTask !== "" && filterTask.length === 0) {
       setErrorMessage("task not found");
-      console.log(errorMessage);
     }
     if (searchTask !== "" && filterTask.length !== 0) {
       setErrorMessage("");
-      console.log(errorMessage);
     }
   }
 
@@ -186,7 +180,6 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   }
 
   const groupTasks = tasks.filter((task) => {
-    console.log(task.taskGroup, groupName);
     return task.taskGroup === groupName;
   });
 
@@ -212,7 +205,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
               </button>
               <button
                 type="button"
-                className="cancle-search"
+                className="cancle-btn"
                 onClick={toggleSearch}
               >
                 🚫
