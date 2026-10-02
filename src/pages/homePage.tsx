@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usPersistedState } from "../hooks/usePersistedState";
 import type { Task } from "../utils/types";
+import { Tooltip } from "react-tooltip";
 
 interface groupProps {
   tasks: Task[];
@@ -78,11 +79,7 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
           }}
           className="display-btn"
         >
-          {displayGrid ? (
-            <span className="display-emoji">🟰</span>
-          ) : (
-            <span className="display-emoji">🪟</span>
-          )}
+          {displayGrid ? <span>🟰</span> : <span>🪟</span>}
         </button>
       </header>
 
@@ -142,12 +139,23 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
             <button
               onClick={() => deleteGroup(group.id, tasks)}
               className="delete-button"
+              data-tooltip-id="group-tooltips"
+              data-tooltip-content="Delete group"
             >
               ❌
             </button>
           </span>
         ))}
       </span>
+      <Tooltip
+        id="group-tooltips"
+        place="top"
+        style={{
+          backgroundColor: "#333",
+          color: "#fff",
+          fontSize: "0.7rem",
+        }}
+      />
     </div>
   );
 }

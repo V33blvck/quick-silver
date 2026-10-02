@@ -3,6 +3,7 @@ import { setItem } from "./utils/localStorage";
 import { date } from "./utils/time";
 import { useLocation } from "react-router-dom";
 import type { Task } from "./utils/types";
+import { Tooltip } from "react-tooltip";
 
 interface todoProps {
   tasks: Task[];
@@ -276,6 +277,8 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
                     className="move-up"
                     disabled={tasks.length === 1 || index === 0}
                     onClick={() => moveUp(index)}
+                    data-tooltip-id="task-tooltips"
+                    data-tooltip-content="Move Up"
                   >
                     <span className="move-up-emoji">☝️</span>
                   </button>
@@ -283,6 +286,8 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
                     className="move-down"
                     disabled={tasks.length === 1 || index === tasks.length - 1}
                     onClick={() => moveDown(index)}
+                    data-tooltip-id="task-tooltips"
+                    data-tooltip-content="Move Down"
                   >
                     <span className="move-down-emoji">👇</span>
                   </button>
@@ -291,6 +296,8 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
               <button
                 className="delete-button"
                 onClick={() => deleteTask(task.id)}
+                data-tooltip-id="task-tooltips"
+                data-tooltip-content="Delete Task"
               >
                 ❌
               </button>
@@ -302,6 +309,15 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
                 <p>started: {task.startTime}</p>
               )}
             </span>
+            <Tooltip
+              id="task-tooltips"
+              place="top"
+              style={{
+                backgroundColor: "#333",
+                color: "#fff",
+                fontSize: "0.7rem",
+              }}
+            />
           </div>
         ))}
       </ul>
