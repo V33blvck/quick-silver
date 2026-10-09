@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { usPersistedState } from "../hooks/usePersistedState";
 import type { Task } from "../utils/types";
 import { Tooltip } from "react-tooltip";
+import ProgressBar from "../utils/progressBar";
 
 interface groupProps {
   tasks: Task[];
@@ -68,6 +69,16 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
       dialogRef.current?.close();
     }
   }
+  function groupProgress(groupName: string) {
+    const groupTasks = tasks.filter((task) => {
+      return task.taskGroup === groupName;
+    });
+    if (groupTasks.length === 0) {
+      return 0;
+    }
+    const completedTasks = groupTasks.filter((task) => task.completed).length;
+    return (completedTasks / groupTasks.length) * 100;
+  }
 
   return (
     <div className="Group-display">
@@ -106,10 +117,10 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
         </span>
       </dialog>
 
-      <span className={displayGrid ? "group-wrapper" : "row-wrapper"}>
+      <span className={displayGrid ? "grid-wrapper" : "row-wrapper"}>
         <span
           className={
-            displayGrid ? "individual-group-wrapper" : "individual-row-wrapper"
+            displayGrid ? "individual-grid-wrapper" : "individual-row-wrapper"
           }
         >
           <button
@@ -122,28 +133,42 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
         {groupTasks.map((group) => (
           <span
             className={
-              displayGrid
-                ? "individual-group-wrapper"
-                : "individual-row-wrapper"
+              displayGrid ? "progress-wrapper-grid" : "progress-wrapper-row"
             }
           >
-            <button
-              key={group.id}
-              className={displayGrid ? "group-item-grid" : "group-item-row"}
-              onClick={() => {
-                openGroup(group.text);
-              }}
+            <span
+              className={
+                displayGrid
+                  ? "individual-grid-wrapper"
+                  : "individual-row-wrapper"
+              }
             >
-              {group.text}
-            </button>
-            <button
-              onClick={() => deleteGroup(group.id, tasks)}
-              className="delete-button"
-              data-tooltip-id="group-tooltips"
-              data-tooltip-content="Delete group"
-            >
-              ❌
-            </button>
+              <button
+                key={group.id}
+                className={displayGrid ? "group-item-grid" : "group-item-row"}
+                onClick={() => {
+                  openGroup(group.text);
+                }}
+              >
+                {group.text}
+              </button>
+              <button
+                onClick={() => deleteGroup(group.id, tasks)}
+                className="delete-button"
+                data-tooltip-id="group-tooltips"
+                data-tooltip-content="Delete group"
+              >
+                ❌
+              </button>
+            </span>
+            <div className="progress-bar">
+              <ProgressBar
+                progress={groupProgress(group.text)}
+                height="10px"
+                color="#2196f3"
+                backgroundColor="#ddd"
+              />
+            </div>
           </span>
         ))}
       </span>
