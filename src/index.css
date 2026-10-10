@@ -284,10 +284,12 @@ input[type="text"]{
     top: -6px;
     right: -4px;
     opacity: 0;
+    pointer-events: none;
   }
 
   &:hover .delete-button{
     opacity: 1;
+    pointer-events: auto;
   }
 }
 .create-group-grid{
@@ -303,6 +305,15 @@ input[type="text"]{
   flex-direction: row;
   width: 100%;
   min-height: 40px;
+  .delete-button{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover .delete-button{
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 .row-wrapper{
   display: flex;
@@ -343,11 +354,16 @@ header{
   border-radius: 10px;
 }
 .progress-bar{
+  position:relative;
   max-width: 300px;
-  height: 10px;
+  height: 12px;
   display:flex;
   justify-content: center;
-  
+  .progress-text{
+    position:absolute;
+    top: -14px;
+    font-size: 13px;
+  }
 }
 .progress-wrapper-grid{
   position: relative;

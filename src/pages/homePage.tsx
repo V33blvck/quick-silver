@@ -164,10 +164,13 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
             <div className="progress-bar">
               <ProgressBar
                 progress={groupProgress(group.text)}
-                height="10px"
+                height="12px"
                 color="#2196f3"
                 backgroundColor="#ddd"
               />
+              <p className="progress-text">
+                {Math.floor(groupProgress(group.text))}%
+              </p>
             </div>
           </span>
         ))}
