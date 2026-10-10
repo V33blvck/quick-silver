@@ -186,7 +186,8 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
 
   return (
     <div className="to-do-list">
-      <h1>{groupName.toUpperCase()}</h1>
+      <h1 className="to-do-header">Quick-Silver To-Do:</h1>
+      <h2 className="to-do-name">{groupName.toUpperCase()}</h2>
       <form onSubmit={handleSubmit} className="task-input">
         {searchMode ? (
           <>

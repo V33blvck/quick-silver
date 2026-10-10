@@ -422,3 +422,10 @@ header{
   border-width: 0px;
   color: #FAF3DD;
 }
+.to-do-header{
+  margin-bottom: -10px;
+}
+.to-do-name{
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
