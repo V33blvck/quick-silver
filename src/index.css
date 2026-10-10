@@ -394,7 +394,7 @@ header{
     margin-left: 7px;
   }
 }
-.empty-state{
+.empty-state,.empty-tasks{
   display: flex;
   justify-self: center;
   flex-direction: column;
@@ -407,6 +407,7 @@ header{
     margin-bottom: 0px;
   }
   p{
+    text-align: center;
     color: #8B9B72;
   }
 }
@@ -433,4 +434,14 @@ header{
 .to-do-name{
   margin-left: 10px;
   margin-bottom: 8px;
+}
+
+.empty-task-img{
+  max-height: 370px;
+  max-width: 370px;
+  mask-image: radial-gradient(
+    ellipse,
+    black 60%,
+    transparent 78%
+  );
 }

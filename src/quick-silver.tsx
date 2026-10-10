@@ -3,6 +3,7 @@ import { setItem } from "./utils/localStorage";
 import { useLocation } from "react-router-dom";
 import type { Task } from "./utils/types";
 import { Tooltip } from "react-tooltip";
+import emptyTasks from "../src/assets/empty-tasks.png";
 
 interface todoProps {
   tasks: Task[];
@@ -12,7 +13,6 @@ interface todoProps {
 function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   //states for add and tasks
   //persisting tasks with local storage
-
   useEffect(() => {
     setItem("tasks", tasks);
   }, [tasks]);
@@ -189,6 +189,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
     <div className="to-do-list">
       <h1 className="to-do-header">Quick-Silver To-Do:</h1>
       <h2 className="to-do-name">{groupName.toUpperCase()}</h2>
+
       <form onSubmit={handleSubmit} className="task-input">
         {searchMode ? (
           <>
@@ -249,80 +250,95 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
           </>
         )}
       </form>
-      <ul className="item-container">
-        {(isSearching ? filterTask : groupTasks).map((task, index) => (
-          <div className="item-wrapper">
-            <span className="li-wrapper">
-              <li key={task.id} className="to-do-item">
-                <span className="item-title">
-                  <input
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={() => {
-                      toggleTask(task.id);
-                      displayCompleteTime(task, task.id);
-                    }}
-                    className="checker"
-                  ></input>
-                  <span
-                    style={{
-                      textDecoration: task.completed ? "line-through" : "none",
-                    }}
-                    className="text"
-                  >
-                    {task.text}
+      {tasks.length === 0 ? (
+        <div className="empty-tasks">
+          <img src={emptyTasks} alt="empty tasks" className="empty-task-img" />
+          <h2>Your to-do list is empty</h2>
+          <p>
+            Add your first task and start making progress, one achievement at a
+            time.
+          </p>
+        </div>
+      ) : (
+        <ul className="item-container">
+          {(isSearching ? filterTask : groupTasks).map((task, index) => (
+            <div className="item-wrapper">
+              <span className="li-wrapper">
+                <li key={task.id} className="to-do-item">
+                  <span className="item-title">
+                    <input
+                      type="checkbox"
+                      checked={task.completed}
+                      onChange={() => {
+                        toggleTask(task.id);
+                        displayCompleteTime(task, task.id);
+                      }}
+                      className="checker"
+                    ></input>
+                    <span
+                      style={{
+                        textDecoration: task.completed
+                          ? "line-through"
+                          : "none",
+                      }}
+                      className="text"
+                    >
+                      {task.text}
+                    </span>
                   </span>
-                </span>
 
-                <span className="item-actions">
-                  <button
-                    className="move-up"
-                    disabled={tasks.length === 1 || index === 0}
-                    onClick={() => moveUp(index)}
-                    data-tooltip-id="task-tooltips"
-                    data-tooltip-content="Move Up"
-                  >
-                    <span className="move-up-emoji">☝️</span>
-                  </button>
-                  <button
-                    className="move-down"
-                    disabled={tasks.length === 1 || index === tasks.length - 1}
-                    onClick={() => moveDown(index)}
-                    data-tooltip-id="task-tooltips"
-                    data-tooltip-content="Move Down"
-                  >
-                    <span className="move-down-emoji">👇</span>
-                  </button>
-                </span>
-              </li>
-              <button
-                className="delete-button"
-                onClick={() => deleteTask(task.id)}
-                data-tooltip-id="task-tooltips"
-                data-tooltip-content="Delete Task"
-              >
-                ❌
-              </button>
-            </span>
-            <span className="task-times">
-              {task.completed ? (
-                <p>completed: {task.time}</p>
-              ) : (
-                <p>started: {task.startTime}</p>
-              )}
-            </span>
-            <Tooltip
-              id="task-tooltips"
-              place="top"
-              style={{
-                backgroundColor: "#333",
-                color: "#fff",
-                fontSize: "0.7rem",
-              }}
-            />
-          </div>
-        ))}
-      </ul>
+                  <span className="item-actions">
+                    <button
+                      className="move-up"
+                      disabled={tasks.length === 1 || index === 0}
+                      onClick={() => moveUp(index)}
+                      data-tooltip-id="task-tooltips"
+                      data-tooltip-content="Move Up"
+                    >
+                      <span className="move-up-emoji">☝️</span>
+                    </button>
+                    <button
+                      className="move-down"
+                      disabled={
+                        tasks.length === 1 || index === tasks.length - 1
+                      }
+                      onClick={() => moveDown(index)}
+                      data-tooltip-id="task-tooltips"
+                      data-tooltip-content="Move Down"
+                    >
+                      <span className="move-down-emoji">👇</span>
+                    </button>
+                  </span>
+                </li>
+                <button
+                  className="delete-button"
+                  onClick={() => deleteTask(task.id)}
+                  data-tooltip-id="task-tooltips"
+                  data-tooltip-content="Delete Task"
+                >
+                  ❌
+                </button>
+              </span>
+              <span className="task-times">
+                {task.completed ? (
+                  <p>completed: {task.time}</p>
+                ) : (
+                  <p>started: {task.startTime}</p>
+                )}
+              </span>
+              <Tooltip
+                id="task-tooltips"
+                place="top"
+                style={{
+                  backgroundColor: "#333",
+                  color: "#fff",
+                  fontSize: "0.7rem",
+                }}
+              />
+            </div>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
