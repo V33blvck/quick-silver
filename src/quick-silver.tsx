@@ -37,6 +37,11 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   const timestamp: number = Date.now();
   const date: Date = new Date(timestamp);
 
+  //filtered task array acording to groups
+  const groupTasks = tasks.filter((task) => {
+    return task.taskGroup === groupName;
+  });
+
   //form function for creating new tasks
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -69,7 +74,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   //switching indexes with the task above
   function moveUp(index: number) {
     if (index > 0) {
-      const updatedTasks = [...tasks];
+      const updatedTasks = [...groupTasks];
       [updatedTasks[index], updatedTasks[index - 1]] = [
         updatedTasks[index - 1],
         updatedTasks[index],
@@ -79,7 +84,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
   }
   //switching indexes with the task below
   function moveDown(index: number) {
-    const updatedTasks = [...tasks];
+    const updatedTasks = [...groupTasks];
     [updatedTasks[index], updatedTasks[index + 1]] = [
       updatedTasks[index + 1],
       updatedTasks[index],
@@ -180,10 +185,6 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
       );
     }
   }
-
-  const groupTasks = tasks.filter((task) => {
-    return task.taskGroup === groupName;
-  });
 
   return (
     <div className="to-do-list">
@@ -290,7 +291,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
                   <span className="item-actions">
                     <button
                       className="move-up"
-                      disabled={tasks.length === 1 || index === 0}
+                      disabled={groupTasks.length === 1 || index === 0}
                       onClick={() => moveUp(index)}
                       data-tooltip-id="task-tooltips"
                       data-tooltip-content="Move Up"
@@ -300,7 +301,8 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
                     <button
                       className="move-down"
                       disabled={
-                        tasks.length === 1 || index === tasks.length - 1
+                        groupTasks.length === 1 ||
+                        index === groupTasks.length - 1
                       }
                       onClick={() => moveDown(index)}
                       data-tooltip-id="task-tooltips"
