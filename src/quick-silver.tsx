@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { setItem } from "./utils/localStorage";
-import { date } from "./utils/time";
 import { useLocation } from "react-router-dom";
 import type { Task } from "./utils/types";
 import { Tooltip } from "react-tooltip";
@@ -35,6 +34,8 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
 
   //Task form object
   //time fetching global variable used by task.startTime and displayCompleteTime
+  const timestamp: number = Date.now();
+  const date: Date = new Date(timestamp);
 
   //form function for creating new tasks
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
