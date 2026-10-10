@@ -4,6 +4,7 @@ import { usPersistedState } from "../hooks/usePersistedState";
 import type { Task } from "../utils/types";
 import { Tooltip } from "react-tooltip";
 import ProgressBar from "../utils/progressBar";
+import emptyGroups from "../assets/empty-groups.png";
 
 interface groupProps {
   tasks: Task[];
@@ -116,65 +117,82 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
           </form>
         </span>
       </dialog>
-
-      <span className={displayGrid ? "grid-wrapper" : "row-wrapper"}>
-        <span
-          className={
-            displayGrid ? "individual-grid-wrapper" : "individual-row-wrapper"
-          }
-        >
-          <button
-            onClick={openDialog}
-            className={displayGrid ? "create-group-grid" : "create-group-row"}
-          >
-            + Create Task Group
+      {groupTasks.length === 0 ? (
+        <div className="empty-state">
+          <img
+            src={emptyGroups}
+            alt="No Task Groups Yet"
+            className="empty-group-img"
+          />
+          <h2>A Place for everything.</h2>
+          <p>
+            Create a group to organise your tasks and keep your goals on track.
+          </p>
+          <button onClick={openDialog} className="empty-group-btn">
+            + Create your first group
           </button>
-        </span>
-        {groupTasks.map((group) => (
+        </div>
+      ) : (
+        <span className={displayGrid ? "grid-wrapper" : "row-wrapper"}>
           <span
             className={
-              displayGrid ? "progress-wrapper-grid" : "progress-wrapper-row"
+              displayGrid ? "individual-grid-wrapper" : "individual-row-wrapper"
             }
           >
+            <button
+              onClick={openDialog}
+              className={displayGrid ? "create-group-grid" : "create-group-row"}
+            >
+              + Create Task Group
+            </button>
+          </span>
+          {groupTasks.map((group) => (
             <span
               className={
-                displayGrid
-                  ? "individual-grid-wrapper"
-                  : "individual-row-wrapper"
+                displayGrid ? "progress-wrapper-grid" : "progress-wrapper-row"
               }
             >
-              <button
-                key={group.id}
-                className={displayGrid ? "group-item-grid" : "group-item-row"}
-                onClick={() => {
-                  openGroup(group.text);
-                }}
+              <span
+                className={
+                  displayGrid
+                    ? "individual-grid-wrapper"
+                    : "individual-row-wrapper"
+                }
               >
-                {group.text}
-              </button>
-              <button
-                onClick={() => deleteGroup(group.id, tasks)}
-                className="delete-button"
-                data-tooltip-id="group-tooltips"
-                data-tooltip-content="Delete group"
-              >
-                ❌
-              </button>
+                <button
+                  key={group.id}
+                  className={displayGrid ? "group-item-grid" : "group-item-row"}
+                  onClick={() => {
+                    openGroup(group.text);
+                  }}
+                >
+                  {group.text}
+                </button>
+                <button
+                  onClick={() => deleteGroup(group.id, tasks)}
+                  className="delete-button"
+                  data-tooltip-id="group-tooltips"
+                  data-tooltip-content="Delete group"
+                >
+                  ❌
+                </button>
+              </span>
+              <div className="progress-bar">
+                <ProgressBar
+                  progress={groupProgress(group.text)}
+                  height="12px"
+                  color="#2196f3"
+                  backgroundColor="#ddd"
+                />
+                <p className="progress-text">
+                  {Math.floor(groupProgress(group.text))}%
+                </p>
+              </div>
             </span>
-            <div className="progress-bar">
-              <ProgressBar
-                progress={groupProgress(group.text)}
-                height="12px"
-                color="#2196f3"
-                backgroundColor="#ddd"
-              />
-              <p className="progress-text">
-                {Math.floor(groupProgress(group.text))}%
-              </p>
-            </div>
-          </span>
-        ))}
-      </span>
+          ))}
+        </span>
+      )}
+
       <Tooltip
         id="group-tooltips"
         place="top"
