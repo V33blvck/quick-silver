@@ -346,7 +346,12 @@ header{
   align-items: center;
   min-height: 115px;
   min-width: 100%;
-  margin: -15px
+  margin: -15px;
+  background-color: #FAF3DD;
+}
+.dialog-box{
+  border-radius: 13px;
+  background-color: #FAF3DD;
 }
 .display-btn{
   font-size: 23px;

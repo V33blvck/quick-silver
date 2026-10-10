@@ -95,7 +95,11 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
         </button>
       </header>
 
-      <dialog ref={dialogRef} onClick={handleClickDialog}>
+      <dialog
+        ref={dialogRef}
+        onClick={handleClickDialog}
+        className="dialog-box"
+      >
         <span className="popup">
           <form onSubmit={handleSubmit} className="group-input" method="dialog">
             <input
