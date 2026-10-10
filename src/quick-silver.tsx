@@ -250,7 +250,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
           </>
         )}
       </form>
-      {tasks.length === 0 ? (
+      {groupTasks.length === 0 ? (
         <div className="empty-tasks">
           <img src={emptyTasks} alt="empty tasks" className="empty-task-img" />
           <h2>Your to-do list is empty</h2>
