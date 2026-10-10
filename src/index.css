@@ -352,6 +352,7 @@ header{
 .dialog-box{
   border-radius: 13px;
   background-color: #FAF3DD;
+  border-width: 1px;
 }
 .display-btn{
   font-size: 23px;
@@ -437,8 +438,10 @@ header{
 }
 
 .empty-task-img{
-  max-height: 370px;
-  max-width: 370px;
+  max-height: 380px;
+  max-width: 380px;
+  min-height: auto;
+  min-width: auto;
   mask-image: radial-gradient(
     ellipse,
     black 60%,
