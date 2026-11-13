@@ -196,6 +196,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
           <>
             <div className="input-wrappers">
               <input
+                className="task-textbox"
                 type="text"
                 placeholder="Search task"
                 value={searchTask}
@@ -224,6 +225,7 @@ function QuickSilver_toDo({ tasks, setTasks }: todoProps) {
           <>
             <div className="input-wrappers">
               <input
+                className="task-textbox"
                 type="text"
                 placeholder="Enter a task"
                 name="task"

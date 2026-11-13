@@ -46,6 +46,9 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
   function openGroup(groupName: string) {
     navigate("/todo", { state: { groupName } });
   }
+  function openReminder() {
+    navigate("/reminder");
+  }
 
   function deleteGroup(groupId: string, tasks: Task[]) {
     const updatedGroup = groupTasks.filter((element) => element.id !== groupId);
@@ -137,64 +140,78 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
           </button>
         </div>
       ) : (
-        <span className={displayGrid ? "grid-wrapper" : "row-wrapper"}>
-          <span
+        <>
+          <h1 className="phrase">
+            Let's be real...
+            <br />
+            you forget stuff. <br />
+            we don't 😎
+          </h1>
+          <span className={displayGrid ? "grid-wrapper" : "row-wrapper"}>
+            {/* <span
             className={
               displayGrid ? "individual-grid-wrapper" : "individual-row-wrapper"
             }
           >
-            <button
-              onClick={openDialog}
+             <button
+              onClick={openReminder}
               className={displayGrid ? "create-group-grid" : "create-group-row"}
             >
               + Create Task Group
-            </button>
-          </span>
-          {groupTasks.map((group) => (
-            <span
-              className={
-                displayGrid ? "progress-wrapper-grid" : "progress-wrapper-row"
-              }
-            >
+            </button> 
+          </span> */}
+            {groupTasks.map((group) => (
               <span
                 className={
-                  displayGrid
-                    ? "individual-grid-wrapper"
-                    : "individual-row-wrapper"
+                  displayGrid ? "progress-wrapper-grid" : "progress-wrapper-row"
                 }
               >
-                <button
-                  key={group.id}
-                  className={displayGrid ? "group-item-grid" : "group-item-row"}
-                  onClick={() => {
-                    openGroup(group.text);
-                  }}
+                <span
+                  className={
+                    displayGrid
+                      ? "individual-grid-wrapper"
+                      : "individual-row-wrapper"
+                  }
                 >
-                  {group.text}
-                </button>
-                <button
-                  onClick={() => deleteGroup(group.id, tasks)}
-                  className="delete-button"
-                  data-tooltip-id="group-tooltips"
-                  data-tooltip-content="Delete group"
-                >
-                  ❌
-                </button>
+                  <button
+                    key={group.id}
+                    className={
+                      displayGrid ? "group-item-grid" : "group-item-row"
+                    }
+                    onClick={() => {
+                      openGroup(group.text);
+                    }}
+                  >
+                    {group.text}
+                  </button>
+                  <button
+                    onClick={() => deleteGroup(group.id, tasks)}
+                    className="delete-button"
+                    data-tooltip-id="group-tooltips"
+                    data-tooltip-content="Delete group"
+                  >
+                    ❌
+                  </button>
+                </span>
+                <div className="progress-bar">
+                  <ProgressBar
+                    progress={groupProgress(group.text)}
+                    height="12px"
+                    color="#2196f3"
+                    backgroundColor="#ddd"
+                  />
+                  <p className="progress-text">
+                    {Math.floor(groupProgress(group.text))}%
+                  </p>
+                </div>
               </span>
-              <div className="progress-bar">
-                <ProgressBar
-                  progress={groupProgress(group.text)}
-                  height="12px"
-                  color="#2196f3"
-                  backgroundColor="#ddd"
-                />
-                <p className="progress-text">
-                  {Math.floor(groupProgress(group.text))}%
-                </p>
-              </div>
-            </span>
-          ))}
-        </span>
+            ))}
+            <h2>Today's Tasks</h2>
+            <div className={displayGrid ? "home-footer" : "home-footer-row"}>
+              <button onClick={openReminder}>➕</button>
+            </div>
+          </span>
+        </>
       )}
 
       <Tooltip
