@@ -1,9 +1,10 @@
 import { DayPicker } from "@daypicker/react";
 import "@daypicker/react/style.css";
+import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Reminder() {
+function AddReminder() {
   const [selected, setSelected] = useState<Date>();
   const [newReminder, setNewReminder] = useState<string>("");
   const navigate = useNavigate();
@@ -16,8 +17,12 @@ function Reminder() {
   return (
     <form onSubmit={handleTitle}>
       <div className="reminder-header">
-        <button onClick={openPrevious}>⬅️</button>
-        <h1>Add Reminder</h1>
+        <button onClick={openPrevious}>
+          <span className="previous-icon">
+            <ChevronLeft size={30} />
+          </span>
+        </button>
+        <h3>Add Reminder</h3>
       </div>
       <p>What do you want to be reminded?</p>
       <input
@@ -63,4 +68,4 @@ function Reminder() {
   );
 }
 
-export default Reminder;
+export default AddReminder;

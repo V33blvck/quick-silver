@@ -5,7 +5,7 @@ import QuickSilver_toDo from "./quick-silver";
 import type { Task } from "./utils/types";
 import { useState } from "react";
 import { getItem } from "./utils/localStorage";
-import Reminder from "./reminder";
+import AddReminder from "./add-reminder";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -21,7 +21,7 @@ function App() {
             path="/"
             element={<HomePage tasks={tasks} setTasks={setTasks} />}
           />
-          <Route path="/reminder" element={<Reminder />} />
+          <Route path="/reminder" element={<AddReminder />} />
           <Route
             path="/todo"
             element={<QuickSilver_toDo tasks={tasks} setTasks={setTasks} />}

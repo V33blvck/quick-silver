@@ -5,6 +5,7 @@ import type { Task } from "../utils/types";
 import { Tooltip } from "react-tooltip";
 import ProgressBar from "../utils/progressBar";
 import emptyGroups from "../assets/empty-groups.png";
+import { LayoutGrid, List, Plus } from "lucide-react";
 
 interface groupProps {
   tasks: Task[];
@@ -94,7 +95,15 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
           }}
           className="display-btn"
         >
-          {displayGrid ? <span>🟰</span> : <span>🪟</span>}
+          {displayGrid ? (
+            <span className="layout-icons">
+              <LayoutGrid size={25} />
+            </span>
+          ) : (
+            <span className="layout-icons">
+              <List size={28} />
+            </span>
+          )}
         </button>
       </header>
 
@@ -208,7 +217,11 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
             ))}
             <h2>Today's Tasks</h2>
             <div className={displayGrid ? "home-footer" : "home-footer-row"}>
-              <button onClick={openReminder}>➕</button>
+              <button onClick={openReminder} className="open-reminder">
+                <span className="plus-btn">
+                  <Plus size={28} />
+                </span>
+              </button>
             </div>
           </span>
         </>
