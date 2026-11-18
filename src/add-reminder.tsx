@@ -14,12 +14,18 @@ function AddReminder() {
     navigate("/");
   }
 
+  function createReminder(selected: Date, newReminder: string) {
+    navigate("/notes", {
+      state: { selected: selected, newReminder: newReminder },
+    });
+  }
+
   return (
     <form onSubmit={handleTitle}>
       <div className="reminder-header">
         <button onClick={openPrevious}>
           <span className="previous-icon">
-            <ChevronLeft size={30} />
+            <ChevronLeft size={27} />
           </span>
         </button>
         <h3>Add Reminder</h3>
@@ -61,7 +67,15 @@ function AddReminder() {
           PM
         </button>
       </div>
-      <button type="submit" className="create-reminder">
+      <button
+        type="submit"
+        className="create-reminder"
+        onClick={() => {
+          if (selected) {
+            createReminder(selected, newReminder);
+          }
+        }}
+      >
         Create Reminder
       </button>
     </form>

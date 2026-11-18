@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 body {
-  background-color: #E5E6E1;
+  background-color: var(--body-color);
+}
+:root{
+  --button-color: #CDCEC9;
+  --body-color: #E5E6E1;
 }
 
 h1{
@@ -41,8 +45,11 @@ h1 {
   margin-bottom: none;
   flex-wrap: wrap;
   padding-bottom: 3px;
-
 }
+.task-input:focus{
+    outline: none;
+    border-width: none;
+  }
 
 .add-button{
   font-size: .9rem;
@@ -336,7 +343,7 @@ h1 {
 .home-header{
   margin-bottom: 9px;
 }
-header{
+.hp-header{
   display:flex;
   align-items: center;
   justify-content: center;
@@ -376,7 +383,7 @@ header{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #BABCB1;
+  background-color: var(--button-color);
   .layout-icons{
     display:flex;
     align-self: center;
@@ -477,13 +484,14 @@ header{
   position: absolute;
   bottom: 15px;
   justify-self: center;
-  background-color: #38BDF8;
+  background-color: #ffffff;
   width: 250px;
   height: 40px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
-  button{
+  box-shadow: 0px 0px 8px 2px rgb(138, 138, 138);
+  .open-reminder{
     display: flex;
     justify-content: center;
     justify-self: center;
@@ -491,8 +499,17 @@ header{
     height: 40px;
     width: 40px;
     border-radius: 50px;
-    position: relative;
+    position: absolute;
     top: -15px;
+  }
+  .schedule-nav{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: 60px;
+    border-width: 0px;
+    background-color: #ffffff;
   }
 }
 .home-footer-row{
@@ -522,14 +539,15 @@ header{
   background-color: #FCC92F;
   border-radius: 30px;
   border-width: 0px;
-  
+  outline: none;
 }
 
 .calendar-wrapper{
   background-color: #ffffff;
+  padding: 20px;
   display:flex;
   min-width: 200px;
-  width: 375px;
+  width: 320px;
   max-width: 95%;
   padding: 10px;
   border-radius: 15px;
@@ -538,9 +556,13 @@ header{
 
 .reminder-header{
   display: flex;
+  justify-content: center;
   flex-direction: row;
   align-items: center;
+  position: relative;
   button{
+    position:absolute;
+    left: 5px;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -552,13 +574,13 @@ header{
     border-radius: 10px;
     background-color: #BABCB1;
   }
-  h3{display:flex;justify-self: center;}
-}
+  }
+
 .phrase{
   margin-bottom: 25px;
 }
 .title-input{
-  max-width: 94%;
+  max-width: 92%;
   width: 375px;
   font-size: 1rem;
   padding: 10px;
@@ -566,13 +588,16 @@ header{
   border-radius: 15px;
   color:black;
   height: 20px;
-  display: flex;
-  justify-self: center;
+  margin-left: 3px;
   background-color: #BABCB1;
+  
 }
-
+.title-input:focus{
+    border: none;
+    outline: none;
+  }
 ::placeholder{
-  font-size: 15px;
+  font-size: 13px;
   color: #61625e
 }
 
@@ -590,6 +615,7 @@ header{
   align-items: center;
 }
 .times{
+  max-width: 100%;
   width: 375px;
   max-height: auto;
   display:grid;
@@ -606,4 +632,41 @@ header{
   .plus-btn{
     color: #FCFCFC;
   }
+}
+.notes-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .notes-header-left, .notes-header-right{
+    display: flex;
+    flex-direction: row;
+  }
+  .notes-header-right{
+    button{margin: 3px;}
+  }
+  button{
+    background-color: var(--button-color);
+    height: 45px;
+    width: 45px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border-width: 0px;
+  }
+}
+.note-pad{
+  background-color: var(--body-color);
+  width: 100%;
+  min-height: 550px;
+  border-width: 0px;
+  border-color: transparent;
+  ::placeholder{
+    font-size: 10px;
+  }
+}
+.note-pad:focus{
+  border: none;
+  outline: none;
 }

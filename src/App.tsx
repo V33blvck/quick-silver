@@ -6,6 +6,8 @@ import type { Task } from "./utils/types";
 import { useState } from "react";
 import { getItem } from "./utils/localStorage";
 import AddReminder from "./add-reminder";
+import DisplaySchedule from "./pages/schedule";
+import NotePad from "./pages/notes";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -26,6 +28,8 @@ function App() {
             path="/todo"
             element={<QuickSilver_toDo tasks={tasks} setTasks={setTasks} />}
           />
+          <Route path="/schedule" element={<DisplaySchedule />} />
+          <Route path="/notes" element={<NotePad />} />
         </Routes>
 
         {/*<QuickSilver_toDo/> <HomePage />;*/}

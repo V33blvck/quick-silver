@@ -5,7 +5,7 @@ import type { Task } from "../utils/types";
 import { Tooltip } from "react-tooltip";
 import ProgressBar from "../utils/progressBar";
 import emptyGroups from "../assets/empty-groups.png";
-import { LayoutGrid, List, Plus } from "lucide-react";
+import { AlarmClock, LayoutGrid, List, Plus } from "lucide-react";
 
 interface groupProps {
   tasks: Task[];
@@ -87,7 +87,7 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
 
   return (
     <div className="Group-display">
-      <header>
+      <header className="hp-header">
         <h1 className="home-header">Quick-Silver To-Do</h1>
         <button
           onClick={() => {
@@ -217,6 +217,16 @@ export default function HomePage({ tasks, setTasks }: groupProps) {
             ))}
             <h2>Today's Tasks</h2>
             <div className={displayGrid ? "home-footer" : "home-footer-row"}>
+              <button
+                onClick={() => {
+                  navigate("/schedule");
+                }}
+                className="schedule-nav"
+              >
+                <span>
+                  <AlarmClock size={24} />
+                </span>
+              </button>
               <button onClick={openReminder} className="open-reminder">
                 <span className="plus-btn">
                   <Plus size={28} />
