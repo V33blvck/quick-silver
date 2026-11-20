@@ -589,7 +589,7 @@ h1 {
   color:black;
   height: 20px;
   margin-left: 3px;
-  background-color: #BABCB1;
+  background-color: #CCCDC8;
   
 }
 .title-input:focus{
@@ -606,13 +606,16 @@ h1 {
   display: flex;
   justify-self: center;
   bottom: 15px;
-  height: 50px;
-  width: 200px;
-  border-radius: 25px;
+  height: 65px;
+  width: 94%;
+  border-radius: 35px;
   background-color: #ffffff;
-  border-width: 1px;
+  border-width: 0px;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 0px 8px 2px rgb(138, 138, 138);
+  font-weight: 750;
+  font-size: 17px;
 }
 .times{
   max-width: 100%;
@@ -621,9 +624,32 @@ h1 {
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   button{
-    border-radius: 10px;
+    border-radius: 16px;
     margin: 5px;
     height: 70px;
+  }
+  p{
+    margin: 0px;
+    position: relative;
+    bottom: -4px;
+    opacity: 42%;
+  }
+  .time-btn-1{
+    background-color: #BDC795;
+  }
+  .time-btn-2{
+    background-color: #C99AA4;
+  }
+  .time-btn-3{
+    background-color: #B9B1C8;
+  }
+  .time-btn-1, .time-btn-2, .time-btn-3{
+    border-width: 0px;
+    font-size: 20px;
+    font-weight: 550;
+  }
+  .time-btn-1:active , .time-btn-2:active , .time-btn-3:active {
+    border-width: 2px;
   }
 }
 .open-reminder{
@@ -652,7 +678,8 @@ h1 {
     display:flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 24px;
+    corner-shape: squircle;
     border-width: 0px;
   }
 }
@@ -663,10 +690,29 @@ h1 {
   border-width: 0px;
   border-color: transparent;
   ::placeholder{
-    font-size: 10px;
+    font-size: 13px;
+    color: #7d7d78
   }
 }
 .note-pad:focus{
   border: none;
   outline: none;
+}
+
+.note-title{
+  font-weight:700;
+}
+
+
+/* OVERRIDES */
+.rdp-selected .rdp-day_button {
+
+  border: none;
+  --rdp-selected-border: none;
+}
+.rdp-weekday{
+  --rdp-weekday-opacity: 40%;
+}
+.rdp-chevron{
+  --rdp-accent-color: rgb(98, 98, 98);
 }

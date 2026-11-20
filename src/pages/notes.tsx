@@ -35,7 +35,7 @@ function NotePad() {
           </button>
         </div>
       </header>
-      <h2>{title}</h2>
+      <h2 className="note-title">{title}</h2>
       <textarea
         placeholder="Start Typing your notes..."
         rows={10}

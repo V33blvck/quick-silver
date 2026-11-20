@@ -8,7 +8,7 @@ function AddReminder() {
   const [selected, setSelected] = useState<Date>();
   const [newReminder, setNewReminder] = useState<string>("");
   const navigate = useNavigate();
-  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   function handleTitle() {}
   function openPrevious() {
     navigate("/");
@@ -53,18 +53,18 @@ function AddReminder() {
       </div>
       <p>Select Time</p>
       <div className="times">
-        <button>
+        <button className="time-btn-1">
           9:00 <br />
-          AM
+          <p>AM</p>
         </button>
-        <button>
+        <button className="time-btn-2">
           12:00 <br />
-          PM
+          <p>PM</p>
         </button>
-        <button>
+        <button className="time-btn-3">
           3:00
           <br />
-          PM
+          <p>PM</p>
         </button>
       </div>
       <button
