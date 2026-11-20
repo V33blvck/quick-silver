@@ -30,7 +30,7 @@ function AddReminder() {
         </button>
         <h3>Add Reminder</h3>
       </div>
-      <p>What do you want to be reminded?</p>
+      <p className="title-question">What do you want to be reminded?</p>
       <input
         className="title-input"
         type="text"
@@ -40,7 +40,7 @@ function AddReminder() {
           setNewReminder(event.target.value);
         }}
       />
-      <p>Select Date</p>
+      <p className="select-date">Select Date</p>
       <div className="calendar-wrapper">
         <DayPicker
           animate
@@ -51,7 +51,7 @@ function AddReminder() {
           formatters={{ formatWeekdayName: (date) => weekdays[date.getDay()] }}
         />
       </div>
-      <p>Select Time</p>
+      <p className="select-time">Select Time</p>
       <div className="times">
         <button className="time-btn-1">
           9:00 <br />
